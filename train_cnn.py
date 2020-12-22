@@ -146,11 +146,14 @@ class AI:
     
     def save_acc_png(self,acc,name):
         plt.figure()
-        plt.plot(range(1,self.EPOCH+1),acc,label=label)
+        plt.plot(range(1,self.EPOCH+1),acc,label=str(name))
         plt.xlabel('epoch')
         plt.ylabel('accuracy')
         plt.legend()
         plt.savefig(str(name)+"_"+self.ACC_PNG)
+
+    def save_model(self):
+        torch.save(self.MODEL.state_dict(),self.PT_NAME)
 
 class AI_30Classes:
     def __init__(self,root_train_dir,root_test_dir):
@@ -158,6 +161,7 @@ class AI_30Classes:
 
         denjyo_classes  =   [
             [
+
                 [],[],[]
             ]  for i in os.listdir(root_test_dir)
         ]
@@ -177,6 +181,9 @@ class AI_30Classes:
         for x in denjyo_classes:
             # print(x)
             ai.save_acc_png(x[2],x[0]) 
+
+        #   保存
+        ai.save_model()
 
 
 if __name__ == "__main__":
